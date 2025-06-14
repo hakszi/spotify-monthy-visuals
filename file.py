@@ -184,8 +184,8 @@ def visualize(df, fig, axes, highlight, choice):
 
             # highlight dates
             if highlight:
-                for target_date, note in highlight:  # Unpack tuple here
-                    if (y_split[i]['Date'] == target_date).any():  # Now comparing Series vs single date
+                for target_date, note in highlight: 
+                    if (y_split[i]['Date'] == target_date).any(): 
                         iso_year, target_week, target_weekday = target_date.isocalendar()
                         current_weeks = [d.isocalendar()[1] for d in y_split[i]['Date']]
                         min_week = min(current_weeks)
