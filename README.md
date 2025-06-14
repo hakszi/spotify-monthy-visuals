@@ -1,6 +1,6 @@
 You can download your Spotify data here: https://www.spotify.com/account/privacy
 
-
+Provided sample data to try without official spotify data
 
 ### Example images
 ![x](pics/example.png)
