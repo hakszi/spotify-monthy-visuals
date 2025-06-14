@@ -57,7 +57,7 @@ def pie_chart(df, name):
         .reset_index()
 
     fig, ax = plt.subplots(layout='constrained')
-    ax.set_title(f'{name} arányok')
+    ax.set_title(f'{name} ratios')
 
     ax.pie(
         chart['count'],
