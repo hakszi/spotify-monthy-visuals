@@ -2,17 +2,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.patches import Rectangle
-from datetime import datetime, timedelta
-from faker import Faker
 
 
 def main():
-    # load existing data
-    # data = [pd.read_json(file) for file in ['audio.json', 'video.json']]
-    # df = pd.concat(data, ignore_index=True)
-
-    # or generate it
-    df = generate_spotify_data()
+    data = [pd.read_json(file) for file in ['audio.json', 'video.json']]
+    df = pd.concat(data, ignore_index=True)
 
     df['ts'] = pd.to_datetime(df['ts'])
     df = df.rename(columns={'ts': 'Date'})
@@ -30,39 +24,6 @@ def main():
     listen_chart(df, 2024, 'hours', highlight)
     # listen_chart(df, 2025, 'songs', highlight)
 
-
-def generate_spotify_data(num_rows=100):
-    fake = Faker()
-    platforms = ['linux', 'windows', 'android', 'ios']
-    countries = ['US', 'GB', 'FR', 'DE', 'HU', 'JP']
-
-    data = {
-        'ts': [datetime(2024, 1, 1) + timedelta(seconds=np.random.randint(0, 31536000)) for _ in range(num_rows)],
-        'platform': np.random.choice(platforms, num_rows),
-        'ms_played': np.random.randint(0, 36000000, num_rows),
-        'conn_country': np.random.choice(countries, num_rows),
-        'ip_addr': [fake.ipv4() for _ in range(num_rows)],
-        'master_metadata_track_name': np.random.choice(['Big Dawgs', 'Song A', 'Track B', 'Tune C'], num_rows),
-        'master_metadata_album_artist_name': np.random.choice(['Hanumankind', 'Artist X', 'Band Y', 'DJ Z'], num_rows),
-        'spotify_track_uri': ['spotify:track:' + ''.join(np.random.choice(list('0123456789abcdefghijklmnopqrstuvwxyz'), 22)) for _ in
-                              range(num_rows)],
-        'reason_start': np.random.choice(['playbtn', 'remote', 'app', 'unknown'], num_rows),
-        'reason_end': np.random.choice(['endplay', 'skip', 'stop', 'unknown'], num_rows),
-        'shuffle': np.random.choice([True, False], num_rows, p=[0.3, 0.7]),
-        'skipped': np.random.choice([True, False], num_rows, p=[0.2, 0.8]),
-        'offline': np.random.choice([True, False], num_rows, p=[0.1, 0.9]),
-        'offline_timestamp': np.random.randint(1731253680, 1767853680, num_rows),
-        'incognito_mode': np.random.choice([True, False], num_rows, p=[0.05, 0.95]),
-        'episode_name': [None] * num_rows,
-        'episode_show_name': [None] * num_rows,
-        'spotify_episode_uri': [None] * num_rows,
-        'audiobook_title': [None] * num_rows,
-        'audiobook_uri': [None] * num_rows,
-        'audiobook_chapter_uri': [None] * num_rows,
-        'audiobook_chapter_title': [None] * num_rows
-    }
-    data = pd.DataFrame(data).sort_values('ts')
-    return data
 
 
 def add_highlight(list, date, label):
